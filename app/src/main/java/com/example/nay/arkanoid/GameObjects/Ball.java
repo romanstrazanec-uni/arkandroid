@@ -1,5 +1,8 @@
 package com.example.nay.arkanoid.GameObjects;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+
 public class Ball extends GameObject {
     private float r;
 
@@ -14,5 +17,11 @@ public class Ball extends GameObject {
 
     public void setR(float r) {
         this.r = r;
+    }
+
+    @Override
+    public void draw(Canvas canvas, Paint paint){
+        super.draw(canvas, paint);
+        canvas.drawCircle(x, y, r, paint);
     }
 }
