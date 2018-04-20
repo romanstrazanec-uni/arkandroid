@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
         this.getSupportActionBar().hide();
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         gameCanvas = new GameCanvas(this);
         setContentView(gameCanvas);
@@ -37,5 +36,17 @@ public class MainActivity extends AppCompatActivity {
                 super.handleMessage(msg);
             }
         };
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        gameCanvas.stopSensor();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        gameCanvas.startSensor();
     }
 }

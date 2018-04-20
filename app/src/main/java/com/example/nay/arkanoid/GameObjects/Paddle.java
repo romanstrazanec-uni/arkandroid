@@ -28,9 +28,17 @@ public class Paddle extends GameObject {
         this.height = height;
     }
 
+    public float getX2(){
+        return x + width;
+    }
+
     @Override
     public void draw(Canvas canvas, Paint paint){
         super.draw(canvas, paint);
         canvas.drawRect(x, y, x + width, y + height, paint);
+    }
+
+    public void move(float speed){
+        this.x += speed;
     }
 }
