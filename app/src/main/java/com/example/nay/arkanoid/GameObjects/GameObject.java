@@ -1,4 +1,4 @@
-package com.example.nay.arkanoid;
+package com.example.nay.arkanoid.GameObjects;
 
 public class GameObject {
     private float x, y;
