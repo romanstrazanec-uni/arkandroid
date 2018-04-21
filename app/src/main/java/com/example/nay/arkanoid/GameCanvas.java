@@ -35,8 +35,16 @@ public class GameCanvas extends View implements SensorEventListener {
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        paddle = new Paddle(size.x/2, size.y*0.9f, size.x*0.1f, 5, Color.WHITE);
-        ball = new Ball(size.x/2, size.y*.89f, 3, random(-7, 7), random(-7,-4), Color.WHITE);
+        paddle = new Paddle(size.x/2, size.y*.9f, size.x*.1f, 5, Color.WHITE);
+        newGame();
+    }
+
+    private void newGame(){
+        ball = new Ball(size.x/2, size.y*.89f, 3, random(-12, 12), random(-12,-8), Color.WHITE);
+
+        bricks = new ArrayList<>();
+        int numberOfBricks = (int)random(10, 30);
+        for(int i = 0; i<numberOfBricks; i++) bricks.add(newBrick());
     }
 
     public static float random(float from, float to){
@@ -49,10 +57,20 @@ public class GameCanvas extends View implements SensorEventListener {
         return size;
     }
 
+
+    // UPDATE ---------------
+
     public void update(){
+        if(Math.random()>.99) bricks.add(newBrick());
         checkHitWall();
         checkHitPaddle();
+        checkHitBrick();
         ball.move();
+    }
+
+    private Brick newBrick(){
+        return new Brick(random(0,size.x - size.x*.07f), random(size.y*.1f, size.y*.5f), size.x*.07f, 5,
+                Color.WHITE);
     }
 
     private void checkHitWall(){
@@ -68,14 +86,28 @@ public class GameCanvas extends View implements SensorEventListener {
         if (y && x) ball.hitX();
     }
 
+    private void checkHitBrick(){
+        boolean withinX, withinY;
+        for(Brick brick:bricks){
+            withinX = ball.x + ball.r > brick.x && ball.x - ball.r < brick.x2();
+            withinY = ball.y + ball.r > brick.y && ball.y - ball.r < brick.y2();
+            if(withinX && withinY) {
+                ball.hitX();
+                bricks.remove(brick);
+                break;
+            }
+        }
+    }
 
-    // DRAW ----------------
+
+    // DRAW -----------------
 
     @Override
     protected void onDraw(Canvas canvas){
         drawBackground(canvas);
         paddle.draw(canvas, paint);
         ball.draw(canvas, paint);
+        for(Brick brick:bricks) brick.draw(canvas, paint);
         invalidate();
     }
 
@@ -104,6 +136,4 @@ public class GameCanvas extends View implements SensorEventListener {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {}
-
-
 }
