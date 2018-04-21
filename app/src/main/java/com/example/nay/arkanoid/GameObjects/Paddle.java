@@ -28,9 +28,11 @@ public class Paddle extends GameObject {
         this.height = height;
     }
 
-    public float getX2(){
+    public float x2(){
         return x + width;
     }
+
+    public float y2(){ return y + height; }
 
     @Override
     public void draw(Canvas canvas, Paint paint){

@@ -36,7 +36,11 @@ public class GameCanvas extends View implements SensorEventListener {
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         paddle = new Paddle(size.x/2, size.y*0.9f, size.x*0.1f, 5, Color.WHITE);
-        ball = new Ball(size.x/2, size.y*.89f, 3, Color.WHITE);
+        ball = new Ball(size.x/2, size.y*.89f, 3, random(-7, 7), random(-7,-4), Color.WHITE);
+    }
+
+    public static float random(float from, float to){
+        return from + (float)Math.random()*(to - from);
     }
 
     private Point getWindowSize(Context context){
@@ -46,8 +50,26 @@ public class GameCanvas extends View implements SensorEventListener {
     }
 
     public void update(){
-
+        checkHitWall();
+        checkHitPaddle();
+        ball.move();
     }
+
+    private void checkHitWall(){
+        if(ball.x - ball.r < 0) ball.hitY();
+        if(ball.x + ball.r > size.x) ball.hitY();
+        if(ball.y - ball.r < 0) ball.hitX();
+        if(ball.y + ball.r > size.y) ball.hitX();
+    }
+
+    private void checkHitPaddle(){
+        boolean y = ball.y + ball.r > paddle.y && ball.y - ball.r < paddle.y2();
+        boolean x = ball.x + ball.r > paddle.x && ball.x - ball.r < paddle.x2();
+        if (y && x) ball.hitX();
+    }
+
+
+    // DRAW ----------------
 
     @Override
     protected void onDraw(Canvas canvas){
@@ -62,6 +84,9 @@ public class GameCanvas extends View implements SensorEventListener {
         canvas.drawRect(0, 0, size.x, size.y, paint);
     }
 
+
+    // SENSOR ---------------
+
     public void stopSensor(){
         sensorManager.unregisterListener(this);
     }
@@ -73,10 +98,12 @@ public class GameCanvas extends View implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if(sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            if(paddle.x + sensorEvent.values[1]*3.5 > 0 && paddle.getX2() + sensorEvent.values[1]*3.5 < size.x) paddle.x += sensorEvent.values[1]*3.5;
+            if(paddle.x + sensorEvent.values[1]*3.5 > 0 && paddle.x2() + sensorEvent.values[1]*3.5 < size.x) paddle.x += sensorEvent.values[1]*3.5;
         }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {}
+
+
 }
