@@ -14,6 +14,7 @@ import android.view.WindowManager;
 
 import com.example.nay.arkanoid.GameObjects.Ball;
 import com.example.nay.arkanoid.GameObjects.Brick;
+import com.example.nay.arkanoid.GameObjects.Counter;
 import com.example.nay.arkanoid.GameObjects.Paddle;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 public class GameCanvas extends View implements SensorEventListener {
     private Paint paint;
     private Point size;
+    private Counter counter;
     private Paddle paddle;
     private Ball ball;
     private ArrayList<Brick> bricks;
@@ -40,6 +42,7 @@ public class GameCanvas extends View implements SensorEventListener {
     }
 
     private void newGame(){
+        counter = new Counter(5, 5, 50);
         ball = new Ball(size.x/2, size.y*.89f, 3, random(-12, 12), random(-12,-8), Color.WHITE);
 
         bricks = new ArrayList<>();
@@ -77,7 +80,7 @@ public class GameCanvas extends View implements SensorEventListener {
         if(ball.x - ball.r < 0) ball.hitY();
         if(ball.x + ball.r > size.x) ball.hitY();
         if(ball.y - ball.r < 0) ball.hitX();
-        if(ball.y + ball.r > size.y) ball.hitX();
+        if(ball.y + ball.r > size.y) newGame();
     }
 
     private void checkHitPaddle(){
@@ -92,6 +95,7 @@ public class GameCanvas extends View implements SensorEventListener {
             withinX = ball.x + ball.r > brick.x && ball.x - ball.r < brick.x2();
             withinY = ball.y + ball.r > brick.y && ball.y - ball.r < brick.y2();
             if(withinX && withinY) {
+                counter.raise();
                 ball.hitX();
                 bricks.remove(brick);
                 break;
@@ -107,6 +111,7 @@ public class GameCanvas extends View implements SensorEventListener {
         drawBackground(canvas);
         paddle.draw(canvas, paint);
         ball.draw(canvas, paint);
+        counter.draw(canvas, paint);
         for(Brick brick:bricks) brick.draw(canvas, paint);
         invalidate();
     }
