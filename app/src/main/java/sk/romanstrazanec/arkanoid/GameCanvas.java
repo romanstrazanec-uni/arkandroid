@@ -1,4 +1,4 @@
-package com.example.nay.arkanoid;
+package sk.romanstrazanec.arkanoid;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -12,10 +12,10 @@ import android.hardware.SensorManager;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.example.nay.arkanoid.GameObjects.Ball;
-import com.example.nay.arkanoid.GameObjects.Brick;
-import com.example.nay.arkanoid.GameObjects.Counter;
-import com.example.nay.arkanoid.GameObjects.Paddle;
+import sk.romanstrazanec.arkanoid.GameObjects.Ball;
+import sk.romanstrazanec.arkanoid.GameObjects.Brick;
+import sk.romanstrazanec.arkanoid.GameObjects.Counter;
+import sk.romanstrazanec.arkanoid.GameObjects.Paddle;
 
 import java.util.ArrayList;
 

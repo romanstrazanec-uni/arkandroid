@@ -1,4 +1,4 @@
-package com.example.nay.arkanoid.GameObjects;
+package sk.romanstrazanec.arkanoid.GameObjects;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

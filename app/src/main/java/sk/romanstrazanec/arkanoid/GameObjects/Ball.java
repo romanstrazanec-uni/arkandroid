@@ -1,9 +1,9 @@
-package com.example.nay.arkanoid.GameObjects;
+package sk.romanstrazanec.arkanoid.GameObjects;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.example.nay.arkanoid.GameCanvas;
+import sk.romanstrazanec.arkanoid.GameCanvas;
 
 public class Ball extends GameObject {
     public float r;

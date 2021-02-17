@@ -1,4 +1,4 @@
-package com.example.nay.arkanoid;
+package sk.romanstrazanec.arkanoid;
 
 import android.os.Handler;
 
