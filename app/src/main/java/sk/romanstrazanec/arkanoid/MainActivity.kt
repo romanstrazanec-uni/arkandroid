@@ -1,51 +1,46 @@
-package sk.romanstrazanec.arkanoid;
+package sk.romanstrazanec.arkanoid
 
-import android.content.pm.ActivityInfo;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.WindowManager;
+import android.content.pm.ActivityInfo
+import android.os.Bundle
+import android.os.Handler
+import android.os.Message
+import android.support.v7.app.AppCompatActivity
+import android.view.WindowManager
 
-public class MainActivity extends AppCompatActivity {
-    UpdateThread updateThread;
-    Handler updateHandler;
-    private GameCanvas gameCanvas;
+class MainActivity : AppCompatActivity() {
+    private var updateThread: UpdateThread? = null
+    private var updateHandler: Handler? = null
+    private var gameCanvas: GameCanvas? = null
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        this.getSupportActionBar().hide();
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        gameCanvas = new GameCanvas(this);
-        setContentView(gameCanvas);
-        createHandler();
-        updateThread = new UpdateThread(updateHandler);
-        updateThread.start();
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        this.supportActionBar!!.hide()
+        this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        this.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        gameCanvas = GameCanvas(this)
+        setContentView(gameCanvas)
+        createHandler()
+        updateThread = UpdateThread(updateHandler!!)
+        updateThread!!.start()
     }
 
-    private void createHandler() {
-        updateHandler = new Handler(){
-            public void handleMessage(Message msg) {
-                gameCanvas.update();
-                gameCanvas.invalidate();
-                super.handleMessage(msg);
+    private fun createHandler() {
+        updateHandler = object : Handler() {
+            override fun handleMessage(msg: Message) {
+                gameCanvas!!.update()
+                gameCanvas!!.invalidate()
+                super.handleMessage(msg)
             }
-        };
+        }
     }
 
-    @Override
-    protected void onPause(){
-        super.onPause();
-        gameCanvas.stopSensor();
+    override fun onPause() {
+        super.onPause()
+        gameCanvas!!.stopSensor()
     }
 
-    @Override
-    protected void onResume(){
-        super.onResume();
-        gameCanvas.startSensor();
+    override fun onResume() {
+        super.onResume()
+        gameCanvas!!.startSensor()
     }
 }

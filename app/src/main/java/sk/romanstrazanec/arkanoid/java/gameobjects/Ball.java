@@ -1,9 +1,9 @@
-package sk.romanstrazanec.arkanoid.GameObjects;
+package sk.romanstrazanec.arkanoid.java.gameobjects;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import sk.romanstrazanec.arkanoid.GameCanvas;
+import sk.romanstrazanec.arkanoid.java.GameCanvas;
 
 public class Ball extends GameObject {
     public float r;
@@ -17,32 +17,32 @@ public class Ball extends GameObject {
     }
 
     @Override
-    public void draw(Canvas canvas, Paint paint){
+    public void draw(Canvas canvas, Paint paint) {
         super.draw(canvas, paint);
         canvas.drawCircle(x, y, r, paint);
     }
 
-    public void move(){
+    public void move() {
         x += dirX;
         y += dirY;
     }
 
-    public void hitX(){
+    public void hitX() {
         dirX += GameCanvas.random(-.1f, .1f);
         dirY = -dirY;
     }
 
-    public void hitY(){
+    public void hitY() {
         dirX = -dirX;
         dirY += GameCanvas.random(-.1f, .1f);
     }
 
-    public void hitX(float randomRange){
+    public void hitX(float randomRange) {
         dirX += GameCanvas.random(-randomRange, randomRange);
         dirY = -dirY;
     }
 
-    public void hitY(float randomRange){
+    public void hitY(float randomRange) {
         dirX = -dirX;
         dirY += GameCanvas.random(-randomRange, randomRange);
     }

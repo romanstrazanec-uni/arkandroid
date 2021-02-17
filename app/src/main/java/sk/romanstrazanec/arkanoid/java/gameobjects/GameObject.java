@@ -1,4 +1,4 @@
-package sk.romanstrazanec.arkanoid.GameObjects;
+package sk.romanstrazanec.arkanoid.java.gameobjects;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -21,7 +21,7 @@ public class GameObject {
         this.color = color;
     }
 
-    public void draw(Canvas canvas, Paint paint){
+    public void draw(Canvas canvas, Paint paint) {
         paint.setColor(color);
     }
 }

@@ -1,4 +1,4 @@
-package sk.romanstrazanec.arkanoid.GameObjects;
+package sk.romanstrazanec.arkanoid.java.gameobjects;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -6,7 +6,7 @@ import android.graphics.Paint;
 
 public class Counter extends GameObject {
     private int num;
-    private int textSize;
+    private final int textSize;
 
     public Counter(float x, float y, int textSize) {
         super(x, y + textSize + 2, Color.WHITE);
